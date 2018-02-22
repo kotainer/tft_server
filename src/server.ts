@@ -9,6 +9,7 @@ import * as conditional from 'koa-conditional-get';
 import * as etag from 'koa-etag';
 
 import { Tasks } from './tasks';
+import { ChatServer } from './services/socket';
 
 const tasks = new Tasks().runTasks();
 
@@ -19,7 +20,7 @@ import err from './middleware/error';
 import validate from './middleware/validateToken';
 
 const env = process.env.NODE_ENV || 'dev';
-const port = process.env.PORT || 82;
+const port = process.env.PORT || 7000;
 
 const app = new Koa();
 
@@ -47,7 +48,7 @@ app.use(serve(appRootDir + '/public'));
 app.use(err);
 app.use(validate);
 
-if (env === 'localDev') {
+if (env === 'dev') {
     app.use(logger());
 }
 
@@ -60,13 +61,15 @@ const server = app.listen(port, () => {
         console.log(chalk.black.bgGreen.bold(`Listening on port: ${port}; db: ${config.get('db')}; env: ${env}`));
         console.log(chalk.red.bold('А ты помнишь про TDD? Написал(а) тесты?'));
     } else {
-        console.log(chalk.red.bold(`Сервер CREASE запущен на ${port};`));
+        console.log(chalk.red.bold(`Сервер CASHBACK_USERS запущен на ${port};`));
     };
 });
 
+const socketService = new ChatServer().getServer();
 
 const appServer = {
-    server: server,
+    server,
+    socketService
 };
 
 export default appServer;

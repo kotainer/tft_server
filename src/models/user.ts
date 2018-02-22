@@ -1,10 +1,10 @@
-import {Document, model, Model, Schema} from 'mongoose';
+import { Document, model, Model, Schema } from 'mongoose';
 
 import crypto = require('crypto');
 
 const appRootDir = require('app-root-dir').get();
 const uuid = require('uuid');
-
+const config = require('config');
 
 interface IUser extends Document {
   password: string;
@@ -18,11 +18,21 @@ interface IUser extends Document {
   phone: string;
   city: string;
   skype: string;
+  address: string;
+  isMain: boolean;
+  isShopOwner: boolean;
+  isBayer: boolean;
+  isCustomer: boolean;
+  shopId: string;
 
-  twoFactorTempSecret: string;
-  twoFactorSecret: string;
-  twoFactorEnabled: boolean;
-  emailIsConfirmed: boolean;
+  balance: number;
+
+  passwordHash: string;
+  salt: string;
+  parent: string;
+  photo: any;
+  oldData: any;
+  passport: string;
 
   checkPassword(password: string): boolean;
 }
@@ -32,18 +42,9 @@ const userSchema = new Schema({
     type: String,
     default: uuid,
   },
-  name: {
-    type: String,
-    default: ''
-  },
-  lastName: {
-    type: String,
-    default: ''
-  },
-  surname: {
-    type: String,
-    default: ''
-  },
+  name: String,
+  lastname: String,
+  surname: String,
   dob: Date,
   phone: String,
   city: String,
@@ -51,33 +52,35 @@ const userSchema = new Schema({
   passport: String,
   address: String,
 
-  email: {
+  cardNumber: {
     type: String,
-    required: 'Укажите e-mail',
-    trim: true
+    // unique: 'Такая карта уже существует',
   },
 
-  emailIsConfirmed: {
-    type: Boolean,
-    default: false
+  email: {
+    type: String,
   },
 
   login: {
     type: String,
-    required: 'Укажите логин',
-    unique: 'Такой логин уже существует',
-    trim: true
+    unique: 'Такой логин уже существует'
   },
 
-  twoFactorTempSecret: String,
-  twoFactorSecret: String,
-  twoFactorEnabled: {
-    type: Boolean,
-    default: false
+  sex: {
+    type: String,
+    enum: ['male', 'female'],
+    default: 'male'
   },
 
   parent: {
-    type: String
+    type: String,
+    ref: 'User',
+    default: null
+  },
+
+  balance: {
+    type: Number,
+    default: 0
   },
 
   isBanned: {
@@ -85,17 +88,39 @@ const userSchema = new Schema({
     default: false
   },
 
+  isShopOwner: {
+    type: Boolean,
+    default: false
+  },
+
+  isBayer: {
+    type: Boolean,
+    default: true
+  },
+
+  isCustomer: {
+    type: Boolean,
+    default: true
+  },
+
+  shopId: String,
+
+  isMain: {
+    type: Boolean,
+    default: false
+  },
 
   bannedTo: {
     type: Date,
     default: 0
   },
 
-  verified: {
-    type: Boolean,
-    default: false
+  oldData: {
+    id: String,
+    card_id: String,
+    refer_id: String,
+    balance: Number
   },
-  verificationCode: String,
 
   createdAt: {
     type: Date,
@@ -106,8 +131,6 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now
   },
-
-  avatar: {},
 
   passwordHash: String,
   salt: String,
@@ -123,8 +146,7 @@ userSchema.virtual('password')
     this._plainPassword = password;
     if (password) {
       this.salt = crypto.randomBytes(4).toString('hex');
-      this.passwordHash = crypto.pbkdf2Sync(
-        password, new Buffer(this.salt, 'binary'), 10000, 64, 'DSA-SHA1').toString('base64');
+      this.passwordHash = crypto.createHash('md5').update(password + config.get('oldSalt')).digest('hex');
     } else {
       this.salt = undefined;
       this.passwordHash = undefined;
@@ -142,10 +164,9 @@ userSchema.methods.checkPassword = function (password) {
   if (!this.passwordHash) {
     return false;
   }
-  return crypto.pbkdf2Sync(
-    password, new Buffer(this.salt, 'binary'), 10000, 64, 'DSA-SHA1').toString('base64') == this.passwordHash;
-};
 
+  return crypto.createHash('md5').update(password + config.get('oldSalt')).digest('hex') == this.passwordHash;
+};
 
 const User = model<IUser>('User', userSchema);
 

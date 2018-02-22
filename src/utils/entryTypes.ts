@@ -15,7 +15,7 @@ export default {
             'login',
             'name',
             'surname',
-            'lastName',
+            'lastname',
             'email',
             'phone',
             'createdAt',
@@ -23,7 +23,8 @@ export default {
             'city',
             'address',
             'skype',
-            'avatar'
+            'avatar',
+            'cardNumber'
         ],
         searchOr: [
             'name',
@@ -84,73 +85,22 @@ export default {
         countLimit: 10,
     },
 
-    post: {
+    order: {
         populate: '',
         fields: [
-            'title',
-            'body',
-            'ifQuestionary',
-            'images',
-            'questionary',
-            'reactions',
-            'tags',
-            'questionaryResult',
-            'reactionsResults',
             'createdAt',
-            'telegramUrl'
+            'shop',
+            'total',
+            'cashback',
+            'status',
+            'purpose',
+            'fiscalDate'
         ],
         searchOr: [],
         sort: '-createdAt',
-        countLimit: 10,
-        extendQuery: {
-            isVisible: true
-        },
-        filePath: 'post'
-    },
-
-    postsForAdmin: {
-        populate: '',
-        fields: [
-            'title',
-            'body',
-            'ifQuestionary',
-            'images',
-            'questionary',
-            'reactions',
-            'tags',
-            'createdAt',
-            'questionaryResult',
-            'telegramUrl'
-        ],
-        searchOr: [],
-        sort: '-createdAt',
-        countLimit: 10,
-        extendQuery: {},
-        filePath: 'post'
-    },
-
-    comment: {
-        populate: 'user',
-        populateSelect: 'name lastName surname email avatar',
-        fields: [
-            'body',
-            'createdAt',
-            'user'
-        ],
-        searchOr: [],
-        sort: '-createdAt',
-        countLimit: 10,
-        extendQuery: {},
-        filePath: 'comment'
-    },
-
-    tokenRate: {
-        populate: '',
-        fields: [],
-        searchOr: [],
-        sort: '',
         countLimit: 10,
         extendQuery: {},
         filePath: ''
     },
+
 };

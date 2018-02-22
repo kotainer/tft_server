@@ -1,14 +1,4 @@
 {
-  "db": "mongodb://localhost/crease",
-  "adminSecretKeyMS": "D368D3A4-878E-47E5-9091-F615E5C6547E",
-  "google_api_key": "AIzaSyBGL4YossaCuQE4weRo-Hy3cYVkNhXGkD4"
+  "db": "mongodb://localhost/cashandback",
+  "oldSalt": "EBUSHKIVOROBUSHKI"
 }
-// "smtp_host": "smtp.mail.ru",
-// "smtp_port": "465",
-// "sender_email": "no-reply@runico.io",
-// "sender_password": "qweqwe123",
-// "sender_name": "sender Name",
-// "sender_signature": "signature",
-// "dkim_domain_name": "runico.io",
-// "dkim_key_selector": "mailru",
-// "dkim_private_key": "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCezM1djFldDiMkCsy6T2mC40wA5bB5CbhFDwnLXWkzDULShnoInf7U5EcSrwaNUjdZCqCSRoraiyF9Eifa4hoE+gR6pA49C8TqMv3x/AAic57XzlhnwCPaTtBCjOFt+MoXZlyWdTAkLXOipMx23U78H9JEXMe/RnaM3OpnA66BNQIDAQAB"

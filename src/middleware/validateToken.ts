@@ -1,22 +1,16 @@
 const jwt = require('jsonwebtoken'); // аутентификация  по JWT для hhtp
-const jwtsecret = 'sarafanprettygoodsecurekey'; // ключ для подписи JWT
+const jwtsecret = 'LKlkaerKawfCashnprettygoodsecurekey'; // ключ для подписи JWT
 
 import * as moment from 'moment';
 import * as User from '../models/user';
 import * as Admin from '../models/admin';
 
 const notAuthMethod = [
-    '/api/auth/register',
-    '/api/auth/login',
-    '/api/auth/validate',
-    '/api/auth/restore',
+    '/api/client/v1/auth/register',
+    '/api/client/v1/auth/login',
 
     '/api/admin/auth/login',
     '/api/admin/auth/validate',
-
-    '/api/coins/price',
-    '/api/coins/portfolio',
-    '/api/coins/list'
 ];
 
 const doubleUsedMethod = [

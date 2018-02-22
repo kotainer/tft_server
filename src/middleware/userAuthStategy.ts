@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local'); // локальная стра�
 const JwtStrategy = require('passport-jwt').Strategy; // авторизация через JWT
 const ExtractJwt = require('passport-jwt').ExtractJwt; // авторизация через JWT
 
-const jwtsecret = 'sarafanprettygoodsecurekey'; // ключ для подписи JWT
+const jwtsecret = 'LKlkaerKawfCashnprettygoodsecurekey'; // ключ для подписи JWT
 const jwt = require('jsonwebtoken'); // аутентификация  по JWT для hhtp
 // const socketioJwt = require('socketio-jwt'); // аутентификация  по JWT для socket.io
 

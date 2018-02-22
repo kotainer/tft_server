@@ -1,4 +1,3 @@
-import { Headers } from '@angular/http';
 import types from '../utils/entryTypes';
 
 import * as _ from 'lodash';
@@ -10,8 +9,6 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const appRootDir = require('app-root-dir').get();
 const config = require('config');
-const securityToken = config.get('adminSecretKeyMS');
-const request = require('request');
 
 export class Crud {
     model: any;
@@ -208,7 +205,7 @@ export class Crud {
             delete updatedItem._id;
         }
 
-        updatedItem.updatedAt = moment();
+        updatedItem.updatedAt = new Date();
         await this.model.update({ _id: ctx.params.id}, updatedItem);
 
         const item = await this.model.findById(ctx.params.id).select(types[this.entryType].fields);
@@ -323,27 +320,5 @@ export class Crud {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
         return text;
-    }
-
-    saveNewPassToMS (user, password) {
-        const requestData: Object = {
-            userName: user,
-            newPassword: password,
-            securityToken: securityToken,
-        };
-        
-        return new Promise((resolve, reject) => {
-            request.post('http://api.runico.io:83/api/User/restorePassword', { json: requestData }, (err, response, body) => {
-                if (err) {
-                    console.log(err)
-                    reject(Error(err));
-                } else {
-                    resolve(response.statusCode);
-                };
-            });
-            request.onerror = function () {
-                reject(Error('Network Error'));
-            };
-        });
     }
 };

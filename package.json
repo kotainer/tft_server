@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=localDev nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
+    "start": "NODE_ENV=dev nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/server.ts",
     "init:dev": "NODE_ENV=dev 'ts-node' src/init/init.ts",
     "init:prod": "NODE_ENV=production 'ts-node' src/init/init.ts",
     "test": "NODE_ENV=test mocha -r ts-node/register src/**/*-test.spec.ts"
@@ -39,7 +39,8 @@
     "nodemailer": "^4.0.1",
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
-    "socket.io": "^1.7.3",
+    "pug": "^2.0.0-rc.4",
+    "socket.io": "~2.0.4",
     "socketio-jwt": "^4.5.0",
     "speakeasy": "^2.0.0",
     "ts-node": "^2.0.0",
@@ -50,6 +51,7 @@
     "@types/mongodb": "^3.0.3",
     "@types/mongoose": "^4.7.33",
     "@types/mousetrap": "^1.6.0",
+    "@types/socket.io": "~1.4.31",
     "@types/node": "^6.0.68",
     "chai": "*",
     "codelyzer": "~2.0.0",
