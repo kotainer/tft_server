@@ -11,7 +11,7 @@ interface IAdmin extends Document  {
   login: string;
   passwordHash: string;
   salt: string;
-  photo: any;
+  avatar: any;
 
   checkPassword(password: string): boolean;
 }
@@ -48,6 +48,8 @@ const adminSchema = new Schema({
 
   passwordHash: String,
   salt: String,
+
+  avatar: {}
 });
 
 

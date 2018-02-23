@@ -19,9 +19,14 @@ export class ChatServer {
     private io: SocketIO.Server;
     private port: string | number;
     private users = {};
-    private types = {
+
+    private TYPES = {
         INIT: 0,
         MESSAGE: 1
+    };
+
+    private MESSAGES_TYPES = {
+        TEXT_MESSAGE: 0
     };
 
     constructor() {
@@ -122,7 +127,7 @@ export class ChatServer {
 
         socket.send({
             result: true,
-            type: this.types.INIT
+            type: this.TYPES.INIT
         });
     }
 
@@ -171,15 +176,16 @@ export class ChatServer {
                     try {
                         receiverSocket.send({
                             result: true,
-                            type: this.types.MESSAGE,
+                            type: this.TYPES.MESSAGE,
                             data: {
                                 sender: {
                                     _id: socket.user._id,
                                     name: `${socket.user.lastname || ''} ${socket.user.name || ''}`,
-                                    avatar: ''
+                                    avatar: socket.user.avatar || ''
                                 },
                                 content: message.content,
-                                chatId: chat._id
+                                chatId: chat._id,
+                                type: this.MESSAGES_TYPES.TEXT_MESSAGE
                             }
                         })
                     } catch (e) {

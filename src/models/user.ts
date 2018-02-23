@@ -33,6 +33,7 @@ interface IUser extends Document {
   photo: any;
   oldData: any;
   passport: string;
+  avatar: any;
 
   checkPassword(password: string): boolean;
 }
@@ -134,6 +135,8 @@ const userSchema = new Schema({
 
   passwordHash: String,
   salt: String,
+
+  avatar: {}
 });
 
 
