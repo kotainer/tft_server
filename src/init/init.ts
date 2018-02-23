@@ -16,6 +16,7 @@ const baseInitiDB = async () => {
             login: 'admin',
             password: 'qweqwe',
             email: 'admin',
+            isAnswerTicket: true
         });
     }
     // ----------------------------------

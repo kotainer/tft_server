@@ -41,6 +41,11 @@ const adminSchema = new Schema({
     default: Date.now
   },
 
+  isAnswerTicket: {
+    type: Boolean,
+    default: false
+  },
+
   passwordHash: String,
   salt: String,
 });

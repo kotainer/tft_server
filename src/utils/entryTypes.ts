@@ -103,4 +103,18 @@ export default {
         filePath: ''
     },
 
+    chat: {
+        populate: '',
+        fields: [
+            'updatedAt',
+            'users',
+            'isSupport'
+        ],
+        searchOr: [],
+        sort: '-updatedAt',
+        countLimit: 10,
+        extendQuery: {},
+        filePath: ''
+    },
+
 };

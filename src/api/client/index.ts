@@ -5,15 +5,18 @@ const convert = require('koa-convert');
 import { Auth } from './auth';
 import { Users } from './users';
 import { Orders } from './orders';
+import { Chats } from './chats';
 
 
 import * as UserModel from '../../models/user';
 import * as OrderModel from '../../models/order';
+import * as ChatModel from '../../models/chat';
 
 
 const auth = new Auth();
 const users = new Users(UserModel, 'user');
 const orders = new Orders(OrderModel, 'order');
+const chats = new Chats(ChatModel, 'chat');
 
 
 router
@@ -34,6 +37,13 @@ router
 
     // ORDERS
     .get('/orders', orders.listMy)
+
+    // -----------------------------------------------
+
+    // CHATS
+    .get('/chats', chats.listMy)
+
+    .post('/chat/support', chats.createSupportChat)
 
     // -----------------------------------------------
 
