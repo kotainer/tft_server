@@ -1,5 +1,5 @@
 const Router = require('koa-router');
-const router = new Router({ prefix: '/api/client/v1' });
+const router = new Router({ prefix: '/api/clients/v1' });
 const convert = require('koa-convert');
 
 import { Auth } from './auth';
