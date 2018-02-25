@@ -40,7 +40,8 @@ export class Auth {
                             login: user.login,
                             email: user.email,
                             name: user.name,
-                            city: user.city
+                            city: user.city,
+                            isShopOwner: user.isShopOwner
                         }
                     }
                 };

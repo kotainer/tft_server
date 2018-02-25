@@ -6,8 +6,8 @@ import * as User from '../models/user';
 import * as Admin from '../models/admin';
 
 const notAuthMethod = [
-    '/api/client/v1/auth/register',
-    '/api/client/v1/auth/login',
+    '/api/clients/v1/auth/register',
+    '/api/clients/v1/auth/login',
 
     '/api/admin/auth/login',
     '/api/admin/auth/validate',
