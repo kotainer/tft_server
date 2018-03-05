@@ -10,7 +10,7 @@ export default {
     },
 
     user: {
-        populate: 'parent',
+        populate: '',
         fields: [
             'login',
             'name',
@@ -108,7 +108,9 @@ export default {
         fields: [
             'updatedAt',
             'users',
-            'isSupport'
+            'isSupport',
+            'newMessagesCount',
+            'name'
         ],
         searchOr: [],
         sort: '-updatedAt',

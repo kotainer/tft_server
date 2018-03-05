@@ -30,6 +30,7 @@ router
 
     // USERS
     .get('/user', users.getMyUser)
+    .get('/user/structure', users.getMyStructure)
 
     .put('/user', users.updateMyUser)
 

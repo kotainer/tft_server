@@ -4,6 +4,7 @@ const uuid = require('uuid');
 
 interface IChat extends Document {
     users: any;
+    name: string;
     messages: any;
     isSupport: boolean;
     newMessagesCount: any;
@@ -14,6 +15,8 @@ const schema = new Schema({
         type: String,
         default: uuid,
     },
+
+    name: String,
 
     users: [],
     messages: [],

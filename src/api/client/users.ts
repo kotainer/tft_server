@@ -51,4 +51,12 @@ export class Users extends Crud {
         await this.update(ctx);
     }
 
+    getMyStructure = async (ctx) => {
+        ctx.extendQuery = {
+            parent: ctx.user._id
+        }
+
+        await this.list(ctx);
+    }
+
 }

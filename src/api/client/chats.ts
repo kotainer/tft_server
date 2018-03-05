@@ -22,6 +22,7 @@ export class Chats extends Crud {
     createSupportChat = async (ctx) => {
         const chat = await new this.model({
             isSupport: true,
+            name: 'Чат с поддержкой',
             users: [],
             messages: [],
             newMessagesCount: {}
