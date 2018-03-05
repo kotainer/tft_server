@@ -17,7 +17,9 @@ export class Users extends Crud {
         'city',
         'name',
         'lastname',
-        'surname'
+        'surname',
+        'avatarBase',
+        'avatar'
     ];
 
     getMyUser = async (ctx) => {

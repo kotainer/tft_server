@@ -26,6 +26,7 @@ passport.use(new LocalStrategy({
       model = User;
     }
 
+    login = login.replace(/-/g, '');
     login = login.trim();
 
     model.findOne({ login }, (err, user) => {

@@ -201,9 +201,33 @@ export class Crud {
             updatedItem = ctx.request.body;
         }
 
+        if (updatedItem.avatarBase) {
+            const base64Data = updatedItem.avatarBase.replace(/^data:image\/png;base64,/, '');
+
+            const newDir = `${appRootDir}/public/img/avatars`;
+            fse.ensureDirSync(newDir);
+
+            await new Promise(resolve => {
+                fs.writeFile(`${newDir}/${updatedItem._id}.png`, base64Data, 'base64', function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    resolve();
+                });
+            });
+
+            updatedItem.avatar = {
+                img: `/img/avatars/${updatedItem._id}.png`
+            };
+
+            delete updatedItem.avatarBase;
+        }
+
         if (updatedItem._id) {
             delete updatedItem._id;
         }
+
+        updatedItem['updatedAt'] = new Date();
 
         updatedItem.updatedAt = new Date();
         await this.model.update({ _id: ctx.params.id}, updatedItem);

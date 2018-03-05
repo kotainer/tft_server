@@ -36,9 +36,6 @@ mongoose.connect(config.get('db'));
 
 // app.use(conditional());
 app.use(etag());
-// app.use(compress({
-//     flush: require('zlib').Z_SYNC_FLUSH
-// }));
 
 app.use(bodyParser({
     formLimit: '7mb'

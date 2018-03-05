@@ -42,6 +42,7 @@ router
 
     // CHATS
     .get('/chats', chats.listMy)
+    .get('/chat/:id', chats.getChat)
 
     .post('/chat/support', chats.createSupportChat)
 

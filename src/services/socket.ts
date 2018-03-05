@@ -180,7 +180,9 @@ export class ChatServer {
                             data: {
                                 sender: {
                                     _id: socket.user._id,
-                                    name: `${socket.user.lastname || ''} ${socket.user.name || ''}`,
+                                    name: `${socket.user.name || ''}`,
+                                    lastname: `${socket.user.lastname|| ''}`,
+                                    surname: `${socket.user.surname || ''}`,
                                     avatar: socket.user.avatar || ''
                                 },
                                 content: message.content,
