@@ -19,13 +19,16 @@ export class Users extends Crud {
         'lastname',
         'surname',
         'avatarBase',
-        'avatar'
     ];
 
     getMyUser = async (ctx) => {
         const user = {};
         for (const field of this.safeUserFields) {
             user[field] = ctx.user[field];
+        }
+
+        if (ctx.user['avatar']) {
+            user['avatar'] = ctx.user['avatar'];
         }
 
         ctx.body = {
