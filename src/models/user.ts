@@ -9,7 +9,7 @@ const config = require('config');
 interface IUser extends Document {
   password: string;
   name: string;
-  lastame: string;
+  lastname: string;
   surname: string;
   sex: string;
   dob: Date;

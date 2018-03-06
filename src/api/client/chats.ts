@@ -115,4 +115,55 @@ export class Chats extends Crud {
             data: messages.reverse()
         }
     }
+
+    chatForUser = async (ctx) => {
+        const userChats = await this.model.find({
+            'users._id': ctx.user._id
+        }).select('users').lean() as any;
+
+        const user = await User.findById(ctx.params.id);
+
+        if (!user) {
+            throw {
+                message: 'itemNotFound',
+                code: 404
+            };
+        }
+
+        for (const item of userChats) {
+            const exist = item.users.find(el => el._id === user._id);
+            if (exist) {
+                return ctx.body = {
+                    result: true,
+                    data: item._id
+                }
+            } 
+        }
+
+        const chat = new this.model({
+            name: `${user.lastname || ''} ${user.name || ''}`,
+            newMessagesCount: {
+                [ctx.user._id]: 0,
+                [user._id]: 0
+            }
+        });
+
+        chat.users.push({
+            _id: ctx.user._id,
+            isAdmin: false
+        });
+
+        chat.users.push({
+            _id: user._id,
+            isAdmin: false
+        })
+
+        await chat.save();
+
+
+        ctx.body = {
+            result: true,
+            data: chat._id
+        }
+    }
 }
