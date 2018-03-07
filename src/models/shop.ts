@@ -8,8 +8,23 @@ interface IShop extends Document {
     percent: number;
     oldId: number;
     fiscalFeature: string;
-
-    attach(field: string, file: any, callback: any): any;
+    isAdmitad: boolean;
+    admitadId: number;
+    description: string;
+    rawDescription: string;
+    regions: any;
+    siteUrl: string;
+    avgHoldTime: number;
+    nameAliases: string;
+    avgMoneyTransferTime: string;
+    actions: string;
+    currency: string;
+    image: string;
+    rating: number;
+    categories: any;
+    isActive: boolean;
+    updatedAt: any;
+    gotoLink: string;
 };
 
 const schema = new Schema({
@@ -26,6 +41,30 @@ const schema = new Schema({
 
     oldId: Number,
 
+    description: String,
+
+    isAdmitad: {
+        type: Boolean,
+        default: false
+    },
+
+    // ADMITAD
+    admitadId: Number,
+    rawDescription: String,
+    regions: [],
+    siteUrl: String,
+    avgHoldTime: Number,
+    nameAliases: String,
+    avgMoneyTransferTime: String,
+    actions: [],
+    gotoLink: String,
+    //
+
+    currency: String,
+    image: String,
+    rating: Number,
+    categories: [],
+
     user: {
       login: String,
       _id: String
@@ -41,11 +80,16 @@ const schema = new Schema({
     isActive: {
         type: Boolean,
         default: true
-      },
+    },
 
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now
+    },
+
+    updatedAt: {
+        type: Date,
+        default: Date.now
     },
 });
 

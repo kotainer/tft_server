@@ -119,4 +119,22 @@ export default {
         filePath: ''
     },
 
+    shop: {
+        populate: '',
+        fields: [
+            'name',
+            'isAdmitad',
+            'image',
+            'actions',
+            'rating'
+        ],
+        searchOr: [],
+        sort: '-rating',
+        countLimit: 12,
+        extendQuery: {
+            isActive: true
+        },
+        filePath: ''
+    },
+
 };

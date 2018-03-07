@@ -7,11 +7,13 @@ import { Users } from './users';
 import { Orders } from './orders';
 import { Chats } from './chats';
 import { Payments } from './payments';
+import { Shops } from './shops';
  
 
 import * as UserModel from '../../models/user';
 import * as OrderModel from '../../models/order';
 import * as ChatModel from '../../models/chat';
+import * as ShopModel from '../../models/shop';
 
 
 const auth = new Auth();
@@ -19,7 +21,7 @@ const users = new Users(UserModel, 'user');
 const orders = new Orders(OrderModel, 'order');
 const chats = new Chats(ChatModel, 'chat');
 const payments = new Payments(OrderModel, 'order');
-
+const shops = new Shops(ShopModel, 'shop');
 
 router
     // AUTH
@@ -54,6 +56,12 @@ router
     .get('/chat/:id', chats.getChat)
 
     .post('/chat/support', chats.createSupportChat)
+
+    // -----------------------------------------------
+
+    // SHOPS
+    .get('/shop/:id', shops.showShop)
+    .get('/shops/popular', shops.list)
 
     // -----------------------------------------------
 

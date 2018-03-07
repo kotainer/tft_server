@@ -11,11 +11,14 @@ const notAuthMethod = [
 
     '/api/admin/auth/login',
     '/api/admin/auth/validate',
+
+    '/api/clients/v1/shops/popular',
 ];
 
 const doubleUsedMethod = [
     '/api/posts',
-    '/api/comments'
+    '/api/comments',
+    '/api/clients/v1/shop/',
 ];
 
 const apiAttribute = '/api/';
