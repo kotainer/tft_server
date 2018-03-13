@@ -14,13 +14,14 @@ import * as UserModel from '../../models/user';
 import * as OrderModel from '../../models/order';
 import * as ChatModel from '../../models/chat';
 import * as ShopModel from '../../models/shop';
+import * as PaymentModel from '../../models/payment';
 
 
 const auth = new Auth();
 const users = new Users(UserModel, 'user');
 const orders = new Orders(OrderModel, 'order');
 const chats = new Chats(ChatModel, 'chat');
-const payments = new Payments(OrderModel, 'order');
+const payments = new Payments(PaymentModel, 'payment');
 const shops = new Shops(ShopModel, 'shop');
 
 router

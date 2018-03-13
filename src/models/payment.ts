@@ -51,6 +51,7 @@ const paymentSchema = new Schema({
     },
 
     orderId: String,
+    oldId: Number,
 
     number: Number,
     isLoading: {

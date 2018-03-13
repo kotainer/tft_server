@@ -137,4 +137,20 @@ export default {
         filePath: ''
     },
 
+    payment: {
+        populate: '',
+        fields: [
+            'createdAt',
+            'shop',
+            'total',
+            'status',
+            'isLoading'
+        ],
+        searchOr: [],
+        sort: '-createdAt',
+        countLimit: 10,
+        extendQuery: {},
+        filePath: ''
+    },
+
 };
