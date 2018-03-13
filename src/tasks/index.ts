@@ -7,7 +7,7 @@ const admitad = new AdmitadIntegrationService();
 
 export class Tasks {
     runTasks = () => {
-        this.syncShops();
+        // this.syncShops();
     }
 
     syncOrder = () => {
@@ -15,6 +15,8 @@ export class Tasks {
     }
 
     syncShops = () => {
-        admitad.synchronizeShops();
+        cron.schedule('1 1 * * *', function () {
+            admitad.synchronizeShops();
+        });
     }
 };

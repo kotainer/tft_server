@@ -95,7 +95,7 @@ export class AdmitadIntegrationService {
         // console.log(shopsCount);
         if (shopsCount._meta && shopsCount._meta.count) {
             limit = 80;
-            count =  100; //shopsCount._meta.count;
+            count = shopsCount._meta.count;
             while (offset < count) {
                 urlShops = `https://api.admitad.com/advcampaigns/website/${this.w_id}/?limit=${limit}&offset=${offset}`;
                 const shops = await this.sendRequest('GET', urlShops, {}, {
