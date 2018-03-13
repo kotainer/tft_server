@@ -26,6 +26,7 @@ interface IUser extends Document {
   shopId: string;
 
   balance: number;
+  pendingBalance: number;
 
   passwordHash: string;
   salt: string;
@@ -80,6 +81,11 @@ const userSchema = new Schema({
   },
 
   balance: {
+    type: Number,
+    default: 0
+  },
+
+  pendingBalance: {
     type: Number,
     default: 0
   },

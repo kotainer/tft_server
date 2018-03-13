@@ -31,6 +31,9 @@ export class Users extends Crud {
             user['avatar'] = ctx.user['avatar'];
         }
 
+        user['balance'] = ctx.user['balance'];
+        user['pendingBalance'] = ctx.user['pendingBalance'];
+
         ctx.body = {
             result: true,
             data: user
