@@ -15,6 +15,7 @@ const notAuthMethod = [
     '/api/clients/v1/shops/popular',
     '/api/clients/v1/shops',
 
+    '/api/clients/v1/categories',
     '/api/clients/v1/categories/popular'
 ];
 

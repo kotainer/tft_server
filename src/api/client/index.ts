@@ -70,7 +70,8 @@ router
     // -----------------------------------------------
 
     // CATEGORIES
-    .get('/categories/popular', shops.showShop)
+    .get('/categories', categories.list)
+    .get('/categories/popular', categories.popular)
 
     // -----------------------------------------------
 
