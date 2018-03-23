@@ -8,6 +8,7 @@ import { Orders } from './orders';
 import { Chats } from './chats';
 import { Payments } from './payments';
 import { Shops } from './shops';
+import { Categories } from './categories';
  
 
 import * as UserModel from '../../models/user';
@@ -23,6 +24,7 @@ const orders = new Orders(OrderModel, 'order');
 const chats = new Chats(ChatModel, 'chat');
 const payments = new Payments(PaymentModel, 'payment');
 const shops = new Shops(ShopModel, 'shop');
+const categories = new Categories()
 
 router
     // AUTH
@@ -63,6 +65,12 @@ router
     // SHOPS
     .get('/shop/:id', shops.showShop)
     .get('/shops/popular', shops.list)
+    .get('/shops', shops.list)
+
+    // -----------------------------------------------
+
+    // CATEGORIES
+    .get('/categories/popular', shops.showShop)
 
     // -----------------------------------------------
 

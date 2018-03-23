@@ -128,7 +128,10 @@ export default {
             'actions',
             'rating'
         ],
-        searchOr: [],
+        searchOr: [
+            'name',
+            'nameAliases'
+        ],
         sort: '-rating',
         countLimit: 12,
         extendQuery: {

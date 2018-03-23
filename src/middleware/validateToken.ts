@@ -13,6 +13,9 @@ const notAuthMethod = [
     '/api/admin/auth/validate',
 
     '/api/clients/v1/shops/popular',
+    '/api/clients/v1/shops',
+
+    '/api/clients/v1/categories/popular'
 ];
 
 const doubleUsedMethod = [
