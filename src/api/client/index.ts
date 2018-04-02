@@ -9,6 +9,7 @@ import { Chats } from './chats';
 import { Payments } from './payments';
 import { Shops } from './shops';
 import { Categories } from './categories';
+import { Comments } from './comments';
  
 
 import * as UserModel from '../../models/user';
@@ -16,6 +17,7 @@ import * as OrderModel from '../../models/order';
 import * as ChatModel from '../../models/chat';
 import * as ShopModel from '../../models/shop';
 import * as PaymentModel from '../../models/payment';
+import * as CommentModel from '../../models/comment';
 
 
 const auth = new Auth();
@@ -24,6 +26,7 @@ const orders = new Orders(OrderModel, 'order');
 const chats = new Chats(ChatModel, 'chat');
 const payments = new Payments(PaymentModel, 'payment');
 const shops = new Shops(ShopModel, 'shop');
+const comments = new Comments(CommentModel, 'comment');
 const categories = new Categories()
 
 router
@@ -67,6 +70,12 @@ router
     .get('/shops/popular', shops.list)
     .get('/shops', shops.list)
 
+    // -----------------------------------------------
+
+    // COMMENTS
+    .get('/shop/:id/comments', comments.listForShop)
+
+    .post('/shop/:id/comments', comments.create)
     // -----------------------------------------------
 
     // CATEGORIES

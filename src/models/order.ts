@@ -19,6 +19,8 @@ interface IOrder extends Document {
     shop: any;
     parentOrder: string;
     purpose: string;
+    admitadId: number;
+    isPayed: boolean;
 }
 
 const schema = new Schema({
@@ -45,6 +47,7 @@ const schema = new Schema({
         type: Number,
         default: 0
     },
+
     cashback: {
         type: Number,
         default: 0
@@ -60,6 +63,11 @@ const schema = new Schema({
         default: false
     },
 
+    isPayed: {
+        type: Boolean,
+        default: false
+    },
+
     status: {
         type: String,
         default: 'pending',
@@ -69,6 +77,13 @@ const schema = new Schema({
             'reject', // Если неверный чек
             'decline' // Отклонён магазином
         ]
+    },
+
+    admitadId: Number,
+
+    isOnline: {
+        type: Boolean,
+        default: true
     },
 
     purpose: String,

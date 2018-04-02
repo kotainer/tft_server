@@ -126,7 +126,8 @@ export default {
             'isAdmitad',
             'image',
             'actions',
-            'rating'
+            'rating',
+            'percent'
         ],
         searchOr: [
             'name',
@@ -136,6 +137,24 @@ export default {
         countLimit: 12,
         extendQuery: {
             isActive: true
+        },
+        filePath: ''
+    },
+
+    comment: {
+        populate: 'user',
+        fields: [
+            'text',
+            'rating',
+            'createdAt'
+        ],
+        searchOr: [
+            'text',
+        ],
+        sort: '-createdAt',
+        countLimit: 10,
+        extendQuery: {
+            isVisible: true
         },
         filePath: ''
     },

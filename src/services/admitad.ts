@@ -1,4 +1,7 @@
 import * as Shop from '../models/shop';
+import * as Order from '../models/order';
+
+import * as moment from 'moment';
 
 const request = require('request');
 
@@ -62,16 +65,63 @@ export class AdmitadIntegrationService {
         let countUpdate = 0
 
         const date = new Date()
-        const curr_date = date.getDate()
-        const curr_month = date.getMonth() + 1
-        const curr_year = date.getFullYear()
-        const urlParams = `start_date=04.01.2017&end_date=${curr_date}.${curr_month}.${curr_year}&action_type=2`;
+        const curr_date = date.getDate();
+        const curr_month = date.getMonth() + 1;
+        const curr_year = date.getFullYear();
 
-            // request {
-            //     method: 'GET'
-            //   url: "https://api.admitad.com/statistics/actions/?#{urlParams}&limit=#{limit}&offset=#{offset}"
-            //   headers: 'Authorization': "Bearer #{access_token}"
-            // }, (error, response, body) ->
+        let prev_month = curr_month - 2;
+
+        if (prev_month < 0) {
+            prev_month = 11;
+        }
+
+        const urlOrders = `https://api.admitad.com/statistics/actions/?`;
+        const urlParams = `start_date=01.${prev_month}.${curr_year}&end_date=${curr_date}.${curr_month}.${curr_year}&action_type=2&limit=2000`;
+
+        const orders = await this.sendRequest('GET', urlOrders + urlParams, {}, {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json'
+        }) as any;
+
+        if (!orders || !orders.results || !orders.results.length) {
+            return;
+        }
+
+        for (const item of orders.results) {
+            let order = await Order.findOne({ admitadId: item.id });
+
+            if (!order) {
+                order = new Order({
+                    admitadId: item.id,
+                    total: item.cart,
+                    cashbackOrigin: item.payment,
+                    status: item.status,
+                    user: {
+                        id: item.subid
+                    },
+                    shop: {
+                        id: item.subid1
+                    }
+                });
+            }
+
+            if (order.status === 'pending' && item.status === 'approved' && !order.isPayed) {
+                await this.createOrderPayment(order);
+            }
+
+            order.status = item.status;
+
+            // await order.save();
+
+        }
+
+        console.log('Обработали заказы');
+
+    }
+
+    createOrderPayment = async (order) => {
+        order.isPayed = true;
+        console.log('create payment', order);
     }
 
     synchronizeShops = async () => {

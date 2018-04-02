@@ -8,6 +8,7 @@ const admitad = new AdmitadIntegrationService();
 export class Tasks {
     runTasks = () => {
         this.syncShops();
+        this.syncOrder();
     }
 
     syncOrder = () => {
