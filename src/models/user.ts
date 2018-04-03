@@ -24,6 +24,7 @@ interface IUser extends Document {
   isBayer: boolean;
   isCustomer: boolean;
   shopId: string;
+  cardNumber: string;
 
   balance: number;
   pendingBalance: number;

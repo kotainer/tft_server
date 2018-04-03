@@ -34,13 +34,15 @@ const schema = new Schema({
         name: String,
         surname: String,
         login: String,
+        cardNumber: String,
         avatar: {}
     },
 
     shop: {
         _id: String,
         name: String,
-        logo: {}
+        logo: {},
+        image: String
     },
 
     total: {

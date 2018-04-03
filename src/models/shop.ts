@@ -25,6 +25,7 @@ interface IShop extends Document {
     isActive: boolean;
     updatedAt: any;
     gotoLink: string;
+    city: string;
 };
 
 const schema = new Schema({
@@ -61,6 +62,7 @@ const schema = new Schema({
     //
 
     currency: String,
+    city: String,
     image: String,
     rating: Number,
     categories: [],

@@ -15,6 +15,8 @@ interface IPayment extends Document {
     status: string;
     createdAt: Date;
     user: IUser;
+    purpose: string;
+    type: string;
 }
 
 const paymentSchema = new Schema({
@@ -43,15 +45,30 @@ const paymentSchema = new Schema({
         _id: String,
         login: String,
         balance: Number,
+        pendingBalance: Number
     },
 
     shop: {
         _id: String,
         name: String,
+        logo: {},
+        image: String
     },
 
     orderId: String,
     oldId: Number,
+
+    type: {
+        type: String,
+        default: 'order',
+        enum: [
+            'order',
+            'ref',
+            'admin'
+        ]
+    },
+
+    purpose: String,
 
     number: Number,
     isLoading: {

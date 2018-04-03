@@ -166,7 +166,8 @@ export default {
             'shop',
             'total',
             'status',
-            'isLoading'
+            'isLoading',
+            'purpose'
         ],
         searchOr: [],
         sort: '-createdAt',

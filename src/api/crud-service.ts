@@ -165,8 +165,6 @@ export class Crud {
             sort = types[this.entryType].sort;
         }
 
-        console.log(sort);
-
         const itemsList = await this.model
             .find(query)
             .lean()

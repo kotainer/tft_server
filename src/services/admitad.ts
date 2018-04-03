@@ -1,5 +1,8 @@
 import * as Shop from '../models/shop';
+import * as User from '../models/user';
 import * as Order from '../models/order';
+import * as Settings from '../models/settings';
+import * as Payment from '../models/payment';
 
 import * as moment from 'moment';
 
@@ -46,6 +49,7 @@ export class AdmitadIntegrationService {
                     if (this.isJsonString(body)) {
                         resolve(JSON.parse(body));
                     } else {
+                        console.log('Пустой ответ');
                         resolve({});
                     }
                         
@@ -58,6 +62,8 @@ export class AdmitadIntegrationService {
         console.log('Запуск синхронизации заказов');
         await this.authAdmitad();
 
+        const settings = (await Settings.findOne({tag: 'payments'})).body;
+
         let limit = 20;
         let offset = 0;
 
@@ -65,7 +71,7 @@ export class AdmitadIntegrationService {
         let countUpdate = 0
 
         const date = new Date()
-        const curr_date = date.getDate();
+        const curr_date = date.getDate() - 1;
         const curr_month = date.getMonth() + 1;
         const curr_year = date.getFullYear();
 
@@ -87,31 +93,97 @@ export class AdmitadIntegrationService {
             return;
         }
 
+        console.log('Пришло заказов - ', orders.results.length)
+
         for (const item of orders.results) {
             let order = await Order.findOne({ admitadId: item.id });
 
-            if (!order) {
-                order = new Order({
-                    admitadId: item.id,
-                    total: item.cart,
-                    cashbackOrigin: item.payment,
-                    status: item.status,
-                    user: {
-                        id: item.subid
-                    },
-                    shop: {
-                        id: item.subid1
+            if (!order && item) {
+                if (item.subid && item.subid1) {
+                    console.log(item);
+                    const shop = await Shop.findById(item.subid1);
+                    const user = await User.findById(item.subid);
+
+                    if (!shop || !user) {
+                        continue;
                     }
-                });
+
+                    const cashback = item.payment - item.payment * (settings.systemPercent / 100);
+
+                    order = new Order({
+                        admitadId: item.id,
+                        total: item.cart,
+                        cashbackOrigin: item.payment,
+                        cashback,
+                        status: item.status,
+                        user,
+                        shop
+                    });
+
+                    const userPayment = new Payment({
+                        total: cashback,
+                        user,
+                        shop,
+                        orderId: order._id,
+                        purpose: `Кэшбэк за заказ №${item.id}`
+                    })
+
+                    userPayment.number = await Payment.count({}) + 1;
+                    await userPayment.save();
+
+                    let parent = user.parent;
+                    let level = 1;
+                    for (const bonus of settings.bonuses) {
+                        if (!parent) {
+                            continue;
+                        }
+
+                        const parentUser = await User.findById(parent);
+
+                        if (parentUser) {
+                            const refTotal = cashback * (bonus / 100);
+                            const parentPayment = new Payment({
+                                total: refTotal,
+                                user: parentUser,
+                                shop,
+                                orderId: order._id,
+                                type: 'ref',
+                                purpose: `Реферальный бонус ${level} уровня за заказ №${order.admitadId} от пользователя ${user.cardNumber}`
+                            })
+
+                            parentPayment.number = await Payment.count({}) + 1;
+
+                            parentUser.pendingBalance += refTotal;
+
+                            await parentPayment.save();
+                            await parentUser.save();
+
+                            parent = parentUser.parent;
+                            level ++;
+                        }
+
+                    }
+                    
+
+                    user.pendingBalance += cashback;
+                    await user.save();
+                    // console.log(order, userPayment);
+                }
             }
 
-            if (order.status === 'pending' && item.status === 'approved' && !order.isPayed) {
-                await this.createOrderPayment(order);
-            }
+            if (order) {
+                if (order.status === 'pending' && item.status === 'approved' && !order.isPayed) {
+                    await this.approveOrder(order);
+                }
 
-            order.status = item.status;
+                if (order.status === 'pending' && item.status === 'decline') {
+                    await this.declineOrder(order);   
+                }
 
-            // await order.save();
+                order.status = item.status;
+
+                await order.save();
+            }  
 
         }
 
@@ -119,9 +191,31 @@ export class AdmitadIntegrationService {
 
     }
 
-    createOrderPayment = async (order) => {
+    approveOrder = async (order) => {
         order.isPayed = true;
-        console.log('create payment', order);
+        
+        const payments = await Payment.find({ orderId: order._id });
+        for (const payment of payments) {
+            const user = await User.findById(payment.user._id);
+            user.pendingBalance -= payment.total;
+            user.balance += payment.total;
+            payment.status = 'completed';
+
+            await user.save();
+            await payment.save();
+        }
+    }
+
+    declineOrder = async (order) => {
+        const payments = await Payment.find({orderId: order._id});
+        for (const payment of payments) {
+            const user = await User.findById(payment.user._id);
+            user.pendingBalance -= payment.total;
+            payment.status = 'canceled';
+
+            await user.save();
+            await payment.save();
+        }
     }
 
     synchronizeShops = async () => {
