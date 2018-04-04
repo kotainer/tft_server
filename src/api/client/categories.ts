@@ -15,7 +15,6 @@ export class Categories{
             }
 
             for (const cat of shop.categories) {
-                console.log(cat);
                 if (!counted[cat]) {
                     counted[cat] = 0;
                 }
@@ -47,8 +46,8 @@ export class Categories{
         ctx.body = {
             result: true,
             data: {
-                list: list.slice(0, 15),
-                count: 15
+                list: list.slice(0, 30),
+                count: 30
             }
         };
     }
@@ -64,7 +63,6 @@ export class Categories{
             }
 
             for (const cat of shop.categories) {
-                console.log(cat);
                 if (!counted[cat]) {
                     counted[cat] = 0;
                 }
