@@ -1,6 +1,5 @@
 import {Document, model, Model, Schema} from 'mongoose';
 
-const appRootDir = require('app-root-dir').get();
 const uuid = require('uuid');
 
 interface IShop extends Document {

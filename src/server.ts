@@ -2,30 +2,25 @@ import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as chalk from 'chalk';
 
-import * as serve from 'koa-static';
 import * as logger from 'koa-logger';
 import * as compress from 'koa-compress';
 import * as conditional from 'koa-conditional-get';
 import * as etag from 'koa-etag';
 
-import { Tasks } from './tasks';
-import { ChatServer } from './services/socket';
+import { SocketServer } from './services/socket';
 
-const tasks = new Tasks().runTasks();
 
 import routes from './api';
 
-import passport from './middleware/userAuthStategy';
 import err from './middleware/error';
-import validate from './middleware/validateToken';
 
+const config = require('config');
 const env = process.env.NODE_ENV || 'dev';
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || config.get('port');
 
 const app = new Koa();
 
-const appRootDir = require('app-root-dir').get();
-const config = require('config');
+
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -33,23 +28,13 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(config.get('db'));
 
-
-// app.use(conditional());
 app.use(etag());
-
-app.use(bodyParser({
-    formLimit: '7mb'
-}));
-app.use(serve(appRootDir + '/public'));
-
 app.use(err);
-app.use(validate);
 
 if (env === 'dev') {
     app.use(logger());
 }
 
-app.use(passport.initialize());
 app.use(routes);
 
 
@@ -62,7 +47,7 @@ const server = app.listen(port, () => {
     };
 });
 
-const socketService = new ChatServer().getServer();
+const socketService = new SocketServer().getServer();
 
 const appServer = {
     server,
