@@ -13,15 +13,12 @@ export class SocketServer {
     private server: Server;
     private io: SocketIO.Server;
     private port: string | number;
-    private users = {};
+    private users = [];
 
     private TYPES = {
         INIT: 0,
-        MESSAGE: 1
-    };
-
-    private MESSAGES_TYPES = {
-        TEXT_MESSAGE: 0
+        MESSAGE: 1,
+        TICK: 2
     };
 
     constructor() {
@@ -55,13 +52,8 @@ export class SocketServer {
 
         this.io.on('connect', (socket: any) => {
             console.log('Connected client on port %s.', this.port);
-            socket.on('message', (m: any) => {
-                console.log('[server](message): %s', JSON.stringify(m));
-                // this.sendMessageInChat(socket, m);
-            });
-
             socket.on('init', (m: any) => {
-                this.initUser(socket, m);
+                this.initUser(socket);
             });
 
             socket.on('disconnect', () => {
@@ -71,20 +63,24 @@ export class SocketServer {
         });
     }
 
+    public sendTick(m: any): void {
+        this.io.emit('tick', {
+            result: true,
+            type: this.TYPES.TICK,
+            ...m
+        });
+    }
+
     public getServer(): any {
         return this.server;
     }
 
-    private initUser = async (socket, token) => {
-        // const exists = this.users[user._id].find(el => el.id === socket.id);
+    private initUser = async (socket) => {
+        socket.send({
+            result: true,
+            type: this.TYPES.INIT
+        });
 
-        // if(!exists) {
-        //     this.users[user._id].push(socket);
-        // }
-
-        // socket.send({
-        //     result: true,
-        //     type: this.TYPES.INIT
-        // });
+        this.users.push(socket);
     }
 }

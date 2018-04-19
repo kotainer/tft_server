@@ -7,8 +7,8 @@ import * as compress from 'koa-compress';
 import * as conditional from 'koa-conditional-get';
 import * as etag from 'koa-etag';
 
-import { SocketServer } from './services/socket';
 
+import { Tasks } from './tasks';
 
 import routes from './api';
 
@@ -18,9 +18,9 @@ const config = require('config');
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || config.get('port');
 
+const tasks = new Tasks().runTasks();
+
 const app = new Koa();
-
-
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -47,11 +47,8 @@ const server = app.listen(port, () => {
     };
 });
 
-const socketService = new SocketServer().getServer();
-
 const appServer = {
-    server,
-    socketService
+    server
 };
 
 export default appServer;
