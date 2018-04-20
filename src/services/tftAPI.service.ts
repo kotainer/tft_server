@@ -48,5 +48,28 @@ export class TftApiService {
         return await this.sendRequest(`explorer/hashes//${hash}`)
     }
 
+    public getLastBlocks = async(count: number) => {
+        const start = await this.getMainInfo() as any;
+        const result = []
+
+        let currentHeight = start.height;
+    
+        for (let i =1; i<=5; i++) {
+            const block = (await this.getBlockById(currentHeight) as any).block;
+
+            result.push({
+                id: block.blockid,
+                parentId: block.rawblock.parentid,
+                height: block.height,
+                difficulty: block.difficulty,
+                timeStamp: block.maturitytimestamp,
+                transactionsCount: block.transactions.length
+            })
+
+            currentHeight--;
+        }
+    
+        return result;
+    }
     
 }

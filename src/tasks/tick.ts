@@ -11,10 +11,18 @@ export class Tick {
     }
 
     sendTickData = async () => {
-        console.log('Отправили данные')
-        const consensus = await this.tftApi.getMainInfo();
+        const main = await this.tftApi.getMainInfo();
+        const last5 = await this.tftApi.getLastBlocks(5);
 
-        this.socketService.sendTick(consensus)
+        this.socketService.sendTick({
+            lastBlock: {
+                id: main.blockid,
+                height: main.height,
+                difficulty: main.difficulty,
+                timeStamp: main.maturitytimestamp
+            },
+            lastBlocks: last5
+        })
     }
 
 }

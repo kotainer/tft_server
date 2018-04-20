@@ -22,11 +22,11 @@ const tasks = new Tasks().runTasks();
 
 const app = new Koa();
 
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-// mongoose.set('debug', true); // вываливаем все запросы в консоль
+// const mongoose = require('mongoose');
+// mongoose.Promise = global.Promise;
+// // mongoose.set('debug', true); // вываливаем все запросы в консоль
 
-mongoose.connect(config.get('db'));
+// mongoose.connect(config.get('db'));
 
 app.use(etag());
 app.use(err);
