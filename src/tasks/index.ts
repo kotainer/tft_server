@@ -15,7 +15,7 @@ export class Tasks {
         });
 
         if (process.env.NODE_ENV === 'dev') {
-            console.log(chalk.white.bgBlue.bold('[tasks] Задача обновления eth транзакций'));
+            console.log(chalk.white.bgBlue.bold('[tasks] Задача отправки текущих данных запущена'));
         }
         
     }

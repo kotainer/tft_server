@@ -51,14 +51,12 @@ export class SocketServer {
         });
 
         this.io.on('connect', (socket: any) => {
-            console.log('Connected client on port %s.', this.port);
             socket.on('init', (m: any) => {
                 this.initUser(socket);
             });
 
             socket.on('disconnect', () => {
                 // this.disconnectUser(socket);
-                console.log('Client disconnected');
             });
         });
     }
@@ -81,6 +79,6 @@ export class SocketServer {
             type: this.TYPES.INIT
         });
 
-        this.users.push(socket);
+        // this.users.push(socket);
     }
 }

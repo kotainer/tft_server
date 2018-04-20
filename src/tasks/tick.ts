@@ -19,7 +19,8 @@ export class Tick {
                 id: main.blockid,
                 height: main.height,
                 difficulty: main.difficulty,
-                timeStamp: main.maturitytimestamp
+                timeStamp: main.maturitytimestamp,
+                activeBlockStake: main.estimatedactivebs
             },
             lastBlocks: last5
         })

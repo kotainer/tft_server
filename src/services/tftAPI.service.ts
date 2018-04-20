@@ -63,7 +63,8 @@ export class TftApiService {
                 height: block.height,
                 difficulty: block.difficulty,
                 timeStamp: block.maturitytimestamp,
-                transactionsCount: block.transactions.length
+                transactionsCount: block.transactions.length,
+                activeBlockStake: block.estimatedactivebs
             })
 
             currentHeight--;
