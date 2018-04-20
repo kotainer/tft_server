@@ -67,7 +67,7 @@ export class SocketServer {
         this.io.emit('tick', {
             result: true,
             type: this.TYPES.TICK,
-            ...m
+            data: m
         });
     }
 
