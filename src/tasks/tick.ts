@@ -18,16 +18,21 @@ export class Tick {
             return;
         }
 
-        this.socketService.sendTick({
-            lastBlock: {
-                id: main.blockid,
-                height: main.height,
-                difficulty: main.difficulty,
-                timeStamp: main.maturitytimestamp,
-                activeBlockStake: main.estimatedactivebs
-            },
-            lastBlocks: last5
-        })
+        try {
+            this.socketService.sendTick({
+                lastBlock: {
+                    id: main.blockid,
+                    height: main.height,
+                    difficulty: main.difficulty,
+                    timeStamp: main.maturitytimestamp,
+                    activeBlockStake: main.estimatedactivebs
+                },
+                lastBlocks: last5
+            })
+        } catch (e) {
+            console.error(e);
+        }
+        
     }
 
 }
