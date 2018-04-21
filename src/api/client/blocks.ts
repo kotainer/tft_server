@@ -42,8 +42,8 @@ export class Blocks {
                 message: 'Invalid block id'
             } 
         }
-        const block = await this.tftApi.getBlockById(ctx.params.id);
 
+        const block = await this.tftApi.getBlockById(ctx.params.id);
         if (!block || block.message) {
             return ctx.body = {
                 result: false,
