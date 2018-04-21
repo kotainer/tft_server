@@ -41,7 +41,7 @@ export class TftApiService {
     }
 
     public getBlockById = async (id: number) => {
-        return await this.sendRequest(`explorer/blocks/${id}`);
+        return await this.sendRequest(`explorer/blocks/${id}`) as any;
     }
 
     public findByHash = async (hash: string) => {
@@ -55,7 +55,7 @@ export class TftApiService {
         let currentHeight = start.height;
 
         if (!start || !currentHeight) {
-            return;
+            return null;
         }
     
         for (let i =1; i<=5; i++) {
@@ -79,6 +79,11 @@ export class TftApiService {
 
     public getPeers = async () => {
         return await this.sendRequest(`gateway`);
+    }
+
+    public getCurrentInfo = async () => {
+        const current = await this.getMainInfo() as any;
+        return (await this.getBlockById(current.height)).block;
     }
     
 }

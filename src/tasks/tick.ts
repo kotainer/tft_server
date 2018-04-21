@@ -11,23 +11,23 @@ export class Tick {
     }
 
     sendTickData = async () => {
-        const main = await this.tftApi.getMainInfo();
-        const last5 = await this.tftApi.getLastBlocks(5);
+        const current = await this.tftApi.getCurrentInfo();
 
-        if (!main || !last5 || !last5.length) {
+        if (!current) {
             return;
         }
-
+        console.log(current);
         try {
             this.socketService.sendTick({
                 lastBlock: {
-                    id: main.blockid,
-                    height: main.height,
-                    difficulty: main.difficulty,
-                    timeStamp: main.maturitytimestamp,
-                    activeBlockStake: main.estimatedactivebs
-                },
-                lastBlocks: last5
+                    id: current.blockid,
+                    height: current.height,
+                    parentId: current.rawblock.parentid,
+                    difficulty: current.difficulty,
+                    timeStamp: current.maturitytimestamp,
+                    activeBlockStake: current.estimatedactivebs,
+                    transactionsCount: current.transactions.length
+                }
             })
         } catch (e) {
             console.error(e);
