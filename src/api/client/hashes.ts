@@ -11,7 +11,7 @@ export class Hashes {
     findHash = async (ctx) => {
         const result = await this.tftApi.findByHash(ctx.params.hash);
 
-        if (!result) {
+        if (!result || result.message) {
             return ctx.body = {
                 result: false,
                 message: 'Invalid hash'
