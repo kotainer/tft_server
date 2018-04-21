@@ -41,11 +41,11 @@ export class TftApiService {
     }
 
     public getBlockById = async (id: number) => {
-        return await this.sendRequest(`explorer/blocks/${id}`) 
+        return await this.sendRequest(`explorer/blocks/${id}`);
     }
 
     public findByHash = async (hash: string) => {
-        return await this.sendRequest(`explorer/hashes//${hash}`)
+        return await this.sendRequest(`explorer/hashes/${hash}`);
     }
 
     public getLastBlocks = async(count: number) => {
@@ -71,6 +71,10 @@ export class TftApiService {
         }
     
         return result;
+    }
+
+    public getPeers = async () => {
+        return await this.sendRequest(`gateway`);
     }
     
 }
