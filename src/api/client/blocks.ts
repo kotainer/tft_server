@@ -12,6 +12,13 @@ export class Blocks {
         const main = await this.tftApi.getMainInfo();
         const last5 = await this.tftApi.getLastBlocks(5);
 
+        if (!main || !last5 || !last5.length) {
+            return ctx.body = {
+                result: true,
+                message: 'Node not synced'
+            };
+        }
+
         ctx.body = {
             result: true,
             data: {

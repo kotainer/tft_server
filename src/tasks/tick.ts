@@ -14,6 +14,10 @@ export class Tick {
         const main = await this.tftApi.getMainInfo();
         const last5 = await this.tftApi.getLastBlocks(5);
 
+        if (!main || !last5 || !last5.length) {
+            return;
+        }
+
         this.socketService.sendTick({
             lastBlock: {
                 id: main.blockid,
