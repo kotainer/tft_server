@@ -18,12 +18,12 @@ export class Hashes {
             }
         }
 
-        if (result.hashtype !== 'blockid' || result.hashtype !== 'transactionid') {
-            return ctx.body = {
-                result: false,
-                message: 'Unsupported hash type'
-            }
-        }
+        // if (result.hashtype !== 'blockid' || result.hashtype !== 'transactionid') {
+        //     return ctx.body = {
+        //         result: false,
+        //         message: 'Unsupported hash type'
+        //     }
+        // }
 
         ctx.body = {
             result: true,
