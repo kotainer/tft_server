@@ -1,15 +1,14 @@
 const Router = require('koa-router');
-const router = new Router({ prefix: '/api/clients/v1' });
-const convert = require('koa-convert');
+const router = new Router({ prefix: '/api/v1' });
 
-import { Payments } from './payments';
+import { Blocks } from './blocks';
  
 
-const payments = new Payments();
+const block = new Blocks();
 
 router
-    // PAYMENTS
-    .get('/payments', payments.listMy)
+    // BLOCKS
+    .get('/block/last', block.getLastInfo)
 
     // -----------------------------------------------
 
