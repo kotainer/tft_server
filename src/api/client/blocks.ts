@@ -35,6 +35,13 @@ export class Blocks {
     }
 
     getByHeigth = async (ctx) => {
+        const id = Number.parseInt(decodeURIComponent(ctx.params.id));
+        if (!id) {
+            return ctx.body = {
+                result: false,
+                message: 'Invalid block id'
+            } 
+        }
         const block = await this.tftApi.getBlockById(ctx.params.id);
 
         if (!block || block.message) {
