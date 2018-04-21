@@ -26,4 +26,20 @@ export class Blocks {
             }
         }
     }
+
+    getByHeigth = async (ctx) => {
+        const block = await this.tftApi.getBlockById(ctx.params.id);
+
+        if (!block || block.message) {
+            return ctx.body = {
+                result: false,
+                message: 'Invalid block id'
+            }
+        }
+
+        ctx.body = {
+            result: true,
+            data: block
+        }
+    }
 }

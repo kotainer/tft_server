@@ -9,7 +9,9 @@ const hashes = new Hashes();
 
 router
     // BLOCKS
-    .get('/block/last', block.getLastInfo)
+    .get('/block', block.getLastInfo)
+
+    .get('/block/:id', block.getByHeigth)
     // -----------------------------------------------
 
     // HASH
