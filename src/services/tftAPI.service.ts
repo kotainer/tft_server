@@ -53,6 +53,10 @@ export class TftApiService {
         const result = []
 
         let currentHeight = start.height;
+
+        if (!start || !currentHeight) {
+            return;
+        }
     
         for (let i =1; i<=5; i++) {
             const block = (await this.getBlockById(currentHeight) as any).block;
