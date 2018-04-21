@@ -16,7 +16,7 @@ export class Tick {
         if (!current) {
             return;
         }
-        console.log(current);
+
         try {
             this.socketService.sendTick({
                 lastBlock: {

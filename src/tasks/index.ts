@@ -10,7 +10,7 @@ export class Tasks {
     }
 
     runTick = () => {
-        cron.schedule('*/2 * * * * * *', () => {
+        cron.schedule('*/3 * * * * * *', () => {
             this.tick.sendTickData();
         });
 
