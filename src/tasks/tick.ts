@@ -29,7 +29,7 @@ export class Tick {
                     height: current.height,
                     parentId: current.rawblock.parentid,
                     difficulty: current.difficulty,
-                    timeStamp: current.maturitytimestamp,
+                    timeStamp: current.rawblock.timestamp,
                     activeBlockStake: current.estimatedactivebs,
                     transactionsCount: current.transactions.length,
                     minerReward: current.rawblock.minerpayouts.reduce((prev, current) => {
