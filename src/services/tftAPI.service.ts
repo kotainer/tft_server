@@ -76,7 +76,10 @@ export class TftApiService {
                 difficulty: block.difficulty,
                 timeStamp: block.rawblock.timestamp,
                 transactionsCount: block.transactions.length,
-                activeBlockStake: block.estimatedactivebs
+                activeBlockStake: block.estimatedactivebs,
+                minerReward: block.rawblock.minerpayouts.reduce((prev, current) => {
+                    return prev + Number.parseInt(current.value);
+                }, 0)
             })
 
             currentHeight--;

@@ -31,7 +31,10 @@ export class Tick {
                     difficulty: current.difficulty,
                     timeStamp: current.maturitytimestamp,
                     activeBlockStake: current.estimatedactivebs,
-                    transactionsCount: current.transactions.length
+                    transactionsCount: current.transactions.length,
+                    minerReward: current.rawblock.minerpayouts.reduce((prev, current) => {
+                        return prev + Number.parseInt(current.value);
+                    }, 0)
                 },
                 currency: {
                     btcUsd: coinPrice,
