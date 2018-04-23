@@ -1,14 +1,22 @@
+let instance = null;
+
 export class TftApiService {
     private request;
     private url;
     private headers;
 
     constructor() {
-        this.request = require('request');
-        this.url = 'http://localhost:23110/';
-        this.headers = {
-            'User-Agent': 'Rivine-Agent'
+        if (!instance) {
+            this.request = require('request');
+            this.url = 'http://localhost:23110/';
+            this.headers = {
+                'User-Agent': 'Rivine-Agent'
+            }
+
+            instance = this;
         }
+
+        return instance;
     }
 
     private sendRequest = async (path) => {

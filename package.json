@@ -23,14 +23,14 @@
     "koa-etag": "^3.0.0",
     "koa-logger": "^2.0.1",
     "koa-router": "=7.0.1",
-    "moment": "=2.19.2",
     "node-cron": "^1.2.1",
     "request": "^2.85.0",
     "socket.io": "~2.1.0",
     "speakeasy": "^2.0.0",
     "ts-node": "^2.0.0",
     "typescript": "2.3.4",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "xml-parser": "^1.2.1"
   },
   "devDependencies": {
     "@types/mousetrap": "^1.6.0",

@@ -1,10 +1,13 @@
+import { CurrencyService } from './../../services/currency.service';
 import { TftApiService } from '../../services/tftAPI.service'
 
 export class Blocks {
     private tftApi;
+    private currencyService
 
     constructor() {
         this.tftApi = new TftApiService();
+        this.currencyService = new CurrencyService();
     }
 
 
@@ -19,6 +22,8 @@ export class Blocks {
             };
         }
 
+        const { coinPrice, currencyRate } = await this.currencyService.getLastInfo('BTC', 'USD');
+
         ctx.body = {
             result: true,
             data: {
@@ -29,7 +34,11 @@ export class Blocks {
                     timeStamp: main.maturitytimestamp,
                     activeBlockStake: main.estimatedactivebs
                 },
-                lastBlocks: last5
+                lastBlocks: last5,
+                currency: {
+                    btcUsd: coinPrice,
+                    usdEur: currencyRate
+                }
             }
         }
     }

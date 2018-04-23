@@ -1,13 +1,16 @@
+import { CurrencyService } from './../services/currency.service';
 import { TftApiService } from '../services/tftAPI.service'
 import { SocketServer } from '../services/socket.service';
 
 export class Tick {
     private socketService;
     private tftApi;
+    private currencyService;
 
     constructor() {
         this.socketService = new SocketServer();
         this.tftApi = new TftApiService();
+        this.currencyService = new CurrencyService;
     }
 
     sendTickData = async () => {
@@ -16,6 +19,8 @@ export class Tick {
         if (!current) {
             return;
         }
+
+        const { coinPrice, currencyRate } = await this.currencyService.getLastInfo('BTC', 'USD');
 
         try {
             this.socketService.sendTick({
@@ -27,6 +32,10 @@ export class Tick {
                     timeStamp: current.maturitytimestamp,
                     activeBlockStake: current.estimatedactivebs,
                     transactionsCount: current.transactions.length
+                },
+                currency: {
+                    btcUsd: coinPrice,
+                    usdEur: currencyRate
                 }
             })
         } catch (e) {
