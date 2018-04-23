@@ -74,7 +74,7 @@ export class TftApiService {
                 parentId: block.rawblock.parentid,
                 height: block.height,
                 difficulty: block.difficulty,
-                timeStamp: block.maturitytimestamp,
+                timeStamp: block.rawblock.timestamp,
                 transactionsCount: block.transactions.length,
                 activeBlockStake: block.estimatedactivebs
             })
