@@ -1,0 +1,5 @@
+2018/04/21 11:08:33.222101 persist.go:68: STARTUP: Logging has started. tfchain Version 1.0.3
+2018/04/21 11:09:28.352745 synchronize.go:574: INFO: IBD done, synced with 3 peers
+2018/04/21 18:21:17.847466 persist.go:74: SHUTDOWN: Logging has terminated.
+2018/04/22 14:20:13.373693 persist.go:68: STARTUP: Logging has started. tfchain Version 1.0.3
+2018/04/22 14:21:15.392594 synchronize.go:574: INFO: IBD done, synced with 4 peers

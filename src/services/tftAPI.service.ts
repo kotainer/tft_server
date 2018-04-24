@@ -66,7 +66,7 @@ export class TftApiService {
             return null;
         }
     
-        for (let i =1; i<=5; i++) {
+        for (let i = 1; i <= count; i++) {
             const block = (await this.getBlockById(currentHeight) as any).block;
 
             result.push({

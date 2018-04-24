@@ -1,0 +1,3 @@
+2018/04/21 11:08:33.246765 persist.go:118: STARTUP: Logging has started. tfchain Version 1.0.3
+2018/04/21 18:21:17.841701 wallet.go:185: SHUTDOWN: Logging has terminated.
+2018/04/22 14:20:13.387217 persist.go:118: STARTUP: Logging has started. tfchain Version 1.0.3
