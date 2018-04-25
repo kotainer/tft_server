@@ -13,7 +13,7 @@ export class Blocks {
 
     getLastInfo = async (ctx) => {
         const main = await this.tftApi.getMainInfo();
-        const last5 = await this.tftApi.getLastBlocks(5);
+        const last5 = await this.tftApi.getLastBlocks(9);
 
         if (!main || !last5 || !last5.length) {
             return ctx.body = {
