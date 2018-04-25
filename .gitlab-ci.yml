@@ -1,7 +1,6 @@
 deploy_dev:
   script:
     - pwd
-    - ssh-keyscan -t rsa 5.45.120.191 >> ~/.ssh/known_hosts
     - rsync -a ./ --exclude '.git' root@5.45.120.191:/root/servers/tft
     - ssh -i ~/.ssh/id_rsa root@5.45.120.191 -t "/root/scripts/deploy-tft-server.bash"
   only:
@@ -11,7 +10,6 @@ deploy_dev:
 deploy_prod_distributors_dashboard:
   script:
     - pwd
-    - ssh-keyscan -t rsa 207.154.221.32 >> ~/.ssh/known_hosts
     - rsync -a ./ --exclude '.git' root@207.154.221.32:/root/servers/tft
     - ssh -i ~/.ssh/id_rsa root@207.154.221.32 -t "/root/scripts/deploy-server-tft.bash"
   only:
