@@ -1,5 +1,4 @@
 {
-  "db": "mongodb://localhost/tft",
   "port": 7000,
   "wsPort": 7002
 }
