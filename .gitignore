@@ -7,6 +7,7 @@
 /public/img
 /public/dist
 /ts-node
+/standard
 
 # dependencies
 /node_modules

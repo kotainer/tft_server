@@ -3,8 +3,6 @@ import * as Koa from 'koa';
 import * as socketIo from 'socket.io';
 import * as chalk from 'chalk';
 
-import * as moment from 'moment';
-
 const config = require('config');
 
 export class SocketServer {
@@ -49,18 +47,6 @@ export class SocketServer {
         this.server.listen(this.port, () => {
             console.log(chalk.blue.bold(`Сервер сокетов запущен на ${this.port};`));
         });
-
-        this.io.on('connect', (socket: any) => {
-            console.log('Connected client on port %s.', this.port);
-            socket.on('init', (m: any) => {
-                this.initUser(socket);
-            });
-
-            socket.on('disconnect', () => {
-                // this.disconnectUser(socket);
-                console.log('Client disconnected');
-            });
-        });
     }
 
     public sendTick(m: any): void {
@@ -75,12 +61,4 @@ export class SocketServer {
         return this.server;
     }
 
-    private initUser = async (socket) => {
-        socket.send({
-            result: true,
-            type: this.TYPES.INIT
-        });
-
-        this.users.push(socket);
-    }
 }

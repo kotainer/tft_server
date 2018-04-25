@@ -1,14 +1,22 @@
+let instance = null;
+
 export class TftApiService {
     private request;
     private url;
     private headers;
 
     constructor() {
-        this.request = require('request');
-        this.url = 'http://localhost:23110/';
-        this.headers = {
-            'User-Agent': 'Rivine-Agent'
+        if (!instance) {
+            this.request = require('request');
+            this.url = 'http://localhost:23110/';
+            this.headers = {
+                'User-Agent': 'Rivine-Agent'
+            }
+
+            instance = this;
         }
+
+        return instance;
     }
 
     private sendRequest = async (path) => {
@@ -41,11 +49,11 @@ export class TftApiService {
     }
 
     public getBlockById = async (id: number) => {
-        return await this.sendRequest(`explorer/blocks/${id}`) 
+        return await this.sendRequest(`explorer/blocks/${id}`) as any;
     }
 
     public findByHash = async (hash: string) => {
-        return await this.sendRequest(`explorer/hashes//${hash}`)
+        return await this.sendRequest(`explorer/hashes/${hash}`);
     }
 
     public getLastBlocks = async(count: number) => {
@@ -53,8 +61,12 @@ export class TftApiService {
         const result = []
 
         let currentHeight = start.height;
+
+        if (!start || !currentHeight) {
+            return null;
+        }
     
-        for (let i =1; i<=5; i++) {
+        for (let i = 1; i <= count; i++) {
             const block = (await this.getBlockById(currentHeight) as any).block;
 
             result.push({
@@ -62,14 +74,27 @@ export class TftApiService {
                 parentId: block.rawblock.parentid,
                 height: block.height,
                 difficulty: block.difficulty,
-                timeStamp: block.maturitytimestamp,
-                transactionsCount: block.transactions.length
+                timeStamp: block.rawblock.timestamp,
+                transactionsCount: block.transactions.length,
+                activeBlockStake: block.estimatedactivebs,
+                minerReward: block.rawblock.minerpayouts.reduce((prev, current) => {
+                    return prev + Number.parseInt(current.value);
+                }, 0)
             })
 
             currentHeight--;
         }
     
         return result;
+    }
+
+    public getPeers = async () => {
+        return await this.sendRequest(`gateway`);
+    }
+
+    public getCurrentInfo = async () => {
+        const current = await this.getMainInfo() as any;
+        return (await this.getBlockById(current.height)).block;
     }
     
 }

@@ -1,28 +1,50 @@
+import { CurrencyService } from './../services/currency.service';
 import { TftApiService } from '../services/tftAPI.service'
 import { SocketServer } from '../services/socket.service';
 
 export class Tick {
     private socketService;
     private tftApi;
+    private currencyService;
 
     constructor() {
         this.socketService = new SocketServer();
         this.tftApi = new TftApiService();
+        this.currencyService = new CurrencyService;
     }
 
     sendTickData = async () => {
-        const main = await this.tftApi.getMainInfo();
-        const last5 = await this.tftApi.getLastBlocks(5);
+        const current = await this.tftApi.getCurrentInfo();
 
-        this.socketService.sendTick({
-            lastBlock: {
-                id: main.blockid,
-                height: main.height,
-                difficulty: main.difficulty,
-                timeStamp: main.maturitytimestamp
-            },
-            lastBlocks: last5
-        })
+        if (!current) {
+            return;
+        }
+
+        const { coinPrice, currencyRate } = await this.currencyService.getLastInfo('BTC', 'USD');
+
+        try {
+            this.socketService.sendTick({
+                lastBlock: {
+                    id: current.blockid,
+                    height: current.height,
+                    parentId: current.rawblock.parentid,
+                    difficulty: current.difficulty,
+                    timeStamp: current.rawblock.timestamp,
+                    activeBlockStake: current.estimatedactivebs,
+                    transactionsCount: current.transactions.length,
+                    minerReward: current.rawblock.minerpayouts.reduce((prev, current) => {
+                        return prev + Number.parseInt(current.value);
+                    }, 0)
+                },
+                currency: {
+                    btcUsd: coinPrice,
+                    usdEur: currencyRate
+                }
+            })
+        } catch (e) {
+            console.error(e);
+        }
+        
     }
 
 }

@@ -1,16 +1,27 @@
 const Router = require('koa-router');
-const router = new Router({ prefix: '/api/clients/v1' });
-const convert = require('koa-convert');
+const router = new Router({ prefix: '/api/v1' });
 
-import { Payments } from './payments';
- 
+import { Blocks } from './blocks';
+import { Hashes } from './hashes';
+import { Peers } from './peers';
 
-const payments = new Payments();
+const block = new Blocks();
+const hashes = new Hashes();
+const peers = new Peers();
 
 router
-    // PAYMENTS
-    .get('/payments', payments.listMy)
+    // BLOCKS
+    .get('/block', block.getLastInfo)
 
+    .get('/block/:id', block.getByHeigth)
+    // -----------------------------------------------
+
+    // HASH
+    .get('/hashes/:hash', hashes.findHash)
+    // -----------------------------------------------
+
+    // PEERS
+    .get('/peers', peers.listPeers)
     // -----------------------------------------------
 
     ;

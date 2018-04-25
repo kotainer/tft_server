@@ -1,18 +1,9 @@
-const Router = require('koa-router');
-
 import clientRouter from './client';
 
-
-const clientAllRouter = new Router();
-clientAllRouter
-    .get('/*', );
-
-
+const Router = require('koa-router');
 const combineRouters = require('koa-combine-routers');
 const router = combineRouters([
-    clientRouter,
-
-    clientAllRouter
+    clientRouter
 ]);
 
 export default router;
