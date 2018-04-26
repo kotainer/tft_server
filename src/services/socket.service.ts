@@ -40,7 +40,7 @@ export class SocketServer {
             this.server = require('https').createServer({
                 key: privateKey,
                 cert: certificate,
-                ca: 
+                ca
             }, this.app.callback());
         } else {
             this.server = require('http').createServer(this.app.callback());
