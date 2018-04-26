@@ -32,7 +32,7 @@ const server = app.listen(port, () => {
         console.log(chalk.black.bgGreen.bold(`Listening on port: ${port}; db: ${config.get('db')}; env: ${env}`));
         console.log(chalk.red.bold('А ты помнишь про TDD? Написал(а) тесты?'));
     } else {
-        console.log(chalk.red.bold(`Сервер TFT запущен на ${port};`));
+        console.log(chalk.red.bold(`Сервер TFT запущен на ${port}; env: ${env}`));
     };
 });
 
