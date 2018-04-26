@@ -36,9 +36,11 @@ export class SocketServer {
             const fs = require('fs');
             const privateKey = fs.readFileSync(config.get('privateKey')).toString();
             const certificate = fs.readFileSync(config.get('certificate')).toString();
+            const ca = fs.readFileSync(config.get('ca')).toString();
             this.server = require('https').createServer({
                 key: privateKey,
-                cert: certificate
+                cert: certificate,
+                ca
             }, this.app.callback());
         } else {
             this.server = require('http').createServer(this.app.callback());
