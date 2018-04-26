@@ -3,5 +3,6 @@
   "wsPort": 7002,
   "ssl": false,
   "privateKey": "/tmp/private.key",
-  "certificate": "/tmp/cert.crt"
+  "certificate": "/tmp/cert.crt",
+  "ca": ""
 }
