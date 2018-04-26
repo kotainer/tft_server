@@ -32,7 +32,17 @@ export class SocketServer {
     }
 
     private createServer(): void {
-        this.server = require('http').createServer(this.app.callback())
+        if (config.get('ssl')) {
+            const fs = require('fs');
+            const privateKey = fs.readFileSync(config.get('privateKey')).toString();
+            const certificate = fs.readFileSync(config.get('certificate')).toString();
+            this.server = require('https').createServer({
+                key: privateKey,
+                cert: certificate
+            }, this.app.callback());
+        } else {
+            this.server = require('http').createServer(this.app.callback());
+        }
     }
 
     private config(): void {

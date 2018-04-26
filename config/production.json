@@ -1,4 +1,7 @@
 {
   "port": 7000,
-  "wsPort": 7002
+  "wsPort": 7002,
+  "ssl": true,
+  "privateKey": "/var/www/html/certs/tft/private.key",
+  "certificate": "/var/www/html/certs/tft/cert.crt"
 }
