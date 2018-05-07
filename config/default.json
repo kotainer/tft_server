@@ -4,5 +4,6 @@
   "ssl": false,
   "privateKey": "/tmp/private.key",
   "certificate": "/tmp/cert.crt",
-  "ca": ""
+  "ca": "",
+  "db": "mongodb://localhost/tft"
 }

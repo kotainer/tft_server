@@ -2,16 +2,18 @@ import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as chalk from 'chalk';
 import * as logger from 'koa-logger';
-import * as compress from 'koa-compress';
-import * as conditional from 'koa-conditional-get';
 import * as etag from 'koa-etag';
 import { Tasks } from './tasks';
 import routes from './api';
 import err from './middleware/error';
 
-const config = require('config');
+import * as config from 'config';
 const env = process.env.NODE_ENV || 'dev';
 const port = process.env.PORT || config.get('port');
+
+import * as mongoose from 'mongoose';
+mongoose.Promise = global.Promise;
+mongoose.connect(config.get('db'));
 
 const tasks = new Tasks().runTasks();
 

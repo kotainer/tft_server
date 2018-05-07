@@ -2,8 +2,8 @@ import { createServer, Server } from 'http';
 import * as Koa from 'koa';
 import * as socketIo from 'socket.io';
 import * as chalk from 'chalk';
-
-const config = require('config');
+import * as config from 'config';
+import * as fs from 'fs';
 
 export class SocketServer {
     public static readonly PORT: number = config.get('wsPort');
@@ -33,7 +33,6 @@ export class SocketServer {
 
     private createServer(): void {
         if (config.get('ssl')) {
-            const fs = require('fs');
             const privateKey = fs.readFileSync(config.get('privateKey')).toString();
             const certificate = fs.readFileSync(config.get('certificate')).toString();
             const ca = fs.readFileSync(config.get('ca')).toString();

@@ -1,6 +1,6 @@
 
-const cron = require('node-cron');
-const chalk = require('chalk');
+import * as cron from 'node-cron';
+import * as chalk from 'chalk';
 
 import { Tick } from './tick';
 import { Curency } from './currency';
@@ -25,7 +25,9 @@ export class Tasks {
     }
 
     runUpdateCurrency = () => {
-        cron.schedule('*/3 * * * *', () => {
+        this.currency.updateCurrencyInfo();
+
+        cron.schedule('* */3 * * *', () => {
             this.currency.updateCurrencyInfo();
         });
 
