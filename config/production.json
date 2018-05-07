@@ -4,5 +4,6 @@
   "ssl": true,
   "privateKey": "/var/www/html/certs/tft/private.key",
   "certificate": "/var/www/html/certs/tft/cert.crt",
-  "ca": "/var/www/html/certs/ca-certs.pem"
+  "ca": "/var/www/html/certs/ca-certs.pem",
+  "db": "mongodb://localhost/tft"
 }
