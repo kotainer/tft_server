@@ -20,20 +20,26 @@ export class TftApiService {
     }
 
     private sendRequest = async (path) => {
-        return new Promise((resolve, reject) => {
-            this.request({
-                method: 'GET',
-                url: this.url + path,
-                headers: this.headers
-            }, (error, response, body) => {
-                if (error) {
-                    console.log(error)
-                    reject(Error(error));
-                } else {
-                    resolve(JSON.parse(body));
-                };
+        try {
+            return new Promise((resolve, reject) => {
+                this.request({
+                    method: 'GET',
+                    url: this.url + path,
+                    headers: this.headers
+                }, (error, response, body) => {
+                    if (error) {
+                        console.log(error)
+                        reject(error);
+                    } else {
+                        resolve(JSON.parse(body));
+                    };
+                });
             });
-        });
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+        
     }
 
     public getLastBlock = async () => {
