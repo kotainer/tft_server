@@ -31,6 +31,7 @@ export class TftApiService {
                         console.log(error)
                         reject(error);
                     } else {
+                        console.log('Получили данные');
                         resolve(JSON.parse(body));
                     };
                 });
